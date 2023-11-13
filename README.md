@@ -17,4 +17,13 @@ design -
 
 - language: python
 - framework: flask
-- dbms: sql/nosql
+- dbms: MongoDB (pyMongo)
+
+dbms record:    
+```
+{          
+    longUrl: "www.amazon.com",          
+    shortUrl: "s0m3hAsHsTr1Ng"  
+}
+```
+
