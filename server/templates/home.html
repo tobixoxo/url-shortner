@@ -6,7 +6,7 @@
     <title>Document</title>
 </head>
 <body>
-    Shorten your Url!
+    <h1>Shorten your Url!</h1>
     <form method="post" id="urlForm">
         <label for="url">enter URL you want to shorten</label><br>
         <input type="text" id="url" value="" name="url"><br>
@@ -55,11 +55,12 @@
 
         fetch(`/deleteUrl?url=${hash}`, {
             method:'DELETE',
-        }).then(response => JSON.stringify(response)).then
+        }).then(response => response.json()).then
         (
             data => {
                 let element = document.getElementById("result");
-                if(response == "0")
+                console.log(data["count"])
+                if(data["count"] == 0)
                     element.innerHTML = "No URL found"
                 else 
                     element.innerHTML = "URL deleted"

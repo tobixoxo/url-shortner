@@ -66,8 +66,8 @@ def deleteUrl():
     try:
         result = urls.delete_one({"shortUrl": shortUrl})
         
-        print(f"Delete result: {result}")
-        return (f"{result.deleted_count}", 204)
+        print(f"Delete result: {result.deleted_count}")
+        return json.dumps({"count": result.deleted_count})
     except Exception as e:
         print(f"Error deleting URL: {e}")
         return ("Error deleting URL", 500)  # Return a 500 Internal Server Error status code
