@@ -1,8 +1,9 @@
-from flask import Flask, jsonify, request, redirect
+from flask import Flask, jsonify, request, redirect, render_template
 from pymongo import MongoClient
 import hashlib
 import json
 import base62
+# from server.frontend import *
 
 app = Flask(__name__)
 client = MongoClient('localhost', 27017)
@@ -27,9 +28,9 @@ def shortenUrl(url):
 
 @app.route('/')
 def home():
-    return "Shorten your URL!"
+    return render_template('home.html')
 
-@app.route('/shorten/')
+@app.route('/shorten/', methods=['POST'])
 def shorten():
     # take the url
     longUrl = request.args.get('url')
@@ -64,8 +65,9 @@ def deleteUrl():
     # check if longUrl already exists
     try:
         result = urls.delete_one({"shortUrl": shortUrl})
+        
         print(f"Delete result: {result}")
-        return "Url Deleted!"
+        return (f"{result.deleted_count}", 204)
     except Exception as e:
         print(f"Error deleting URL: {e}")
-        return "Error deleting URL", 500  # Return a 500 Internal Server Error status code
+        return ("Error deleting URL", 500)  # Return a 500 Internal Server Error status code
